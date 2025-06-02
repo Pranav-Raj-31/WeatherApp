@@ -7,7 +7,7 @@ import "../styles.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("Bharuch"); // Default search query
   const [weather, setWeather] = useState({
     loading: true,
     data: {},
@@ -16,38 +16,25 @@ function App() {
 
   const toDate = () => {
     const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
     ];
     const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
+      "Sunday", "Monday", "Tuesday", "Wednesday",
+      "Thursday", "Friday", "Saturday"
     ];
 
     const currentDate = new Date();
-    const date = `${days[currentDate.getDay()]} ${currentDate.getDate()} ${months[currentDate.getMonth()]
-      }`;
+    const date = `${days[currentDate.getDay()]} ${currentDate.getDate()} ${months[currentDate.getMonth()]}`;
     return date;
   };
-  //new search function
+
   const search = async (event) => {
     event.preventDefault();
-    if (event.type === "click" || (event.type === "keypress" && event.key === "Enter")) {
+    if (
+      event.type === "click" ||
+      (event.type === "keypress" && event.key === "Enter")
+    ) {
       setWeather({ ...weather, loading: true });
       const apiKey = "b03a640e5ef6980o4da35b006t5f2942";
       const url = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${apiKey}`;
@@ -68,7 +55,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const apiKey = "b03a640e5ef6980o4da35b006t5f2942";
-      const url = `https://api.shecodes.io/weather/v1/current?query=Rabat&key=${apiKey}`;
+      const url = `https://api.shecodes.io/weather/v1/current?query=Bharuch&key=${apiKey}`;
 
       try {
         const response = await axios.get(url);
@@ -84,8 +71,6 @@ function App() {
 
   return (
     <div className="App">
-
-      {/* SearchEngine component */}
       <SearchEngine query={query} setQuery={setQuery} search={search} />
 
       {weather.loading && (
@@ -109,7 +94,6 @@ function App() {
       )}
 
       {weather && weather.data && weather.data.condition && (
-        // Forecast component
         <Forecast weather={weather} toDate={toDate} />
       )}
     </div>
